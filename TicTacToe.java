@@ -1,8 +1,11 @@
 package org.example;
 
+import java.util.Scanner;
 import java.util.Random;
 
 public class TicTacToe {
+
+    static Scanner scanner = new Scanner(System.in);
 
     // Initialize board
     public static void initializeBoard(char[][] board) {
@@ -24,30 +27,23 @@ public class TicTacToe {
         }
     }
 
-    // UC2: Toss logic
+    // UC2: Toss
     public static void tossAndAssign() {
         Random rand = new Random();
-
-        int toss = rand.nextInt(2); // 0 or 1
-
-        char userSymbol;
-        char computerSymbol;
-        String currentPlayer;
+        int toss = rand.nextInt(2);
 
         if (toss == 0) {
-            userSymbol = 'X';
-            computerSymbol = 'O';
-            currentPlayer = "User";
+            System.out.println("User plays first with X");
         } else {
-            userSymbol = 'O';
-            computerSymbol = 'X';
-            currentPlayer = "Computer";
+            System.out.println("Computer plays first with X");
         }
+    }
 
-        System.out.println("Toss Result:");
-        System.out.println("User Symbol: " + userSymbol);
-        System.out.println("Computer Symbol: " + computerSymbol);
-        System.out.println("First Turn: " + currentPlayer);
+    // UC3: Get user slot input
+    public static int getUserInput() {
+        System.out.print("Enter a slot number (1-9): ");
+        int slot = scanner.nextInt();
+        return slot;
     }
 
     public static void main(String[] args) {
@@ -55,8 +51,10 @@ public class TicTacToe {
 
         initializeBoard(board);
         printBoard(board);
-
-        // UC2 Execution
         tossAndAssign();
+
+        // UC3 Execution
+        int userSlot = getUserInput();
+        System.out.println("You selected slot: " + userSlot);
     }
 }
