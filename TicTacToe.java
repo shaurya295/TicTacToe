@@ -56,17 +56,31 @@ public class TicTacToe {
     // UC3: Get user input
     public static int getUserInput() {
         System.out.print("\nEnter a slot number (1-9): ");
-        int slot = scanner.nextInt();
-        return slot;
+        return scanner.nextInt();
     }
 
     // UC4: Convert slot to row & column
     public static int[] convertSlotToIndex(int slot) {
-        int index = slot - 1;   // Convert to 0-based
+        int index = slot - 1;
         int row = index / 3;
         int col = index % 3;
-
         return new int[]{row, col};
+    }
+
+    // UC5: Validate move
+    public static boolean isValidMove(char[][] board, int row, int col) {
+
+        // Boundary check
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            return false;
+        }
+
+        // Cell availability check
+        if (board[row][col] != '-') {
+            return false;
+        }
+
+        return true;
     }
 
     public static void main(String[] args) {
@@ -80,14 +94,25 @@ public class TicTacToe {
         // UC2
         tossAndAssign();
 
-        // UC3
-        int userSlot = getUserInput();
+        // UC3 + UC4 + UC5 combined
+        int row, col;
+        while (true) {
+            int slot = getUserInput();
+            int[] position = convertSlotToIndex(slot);
 
-        // UC4
-        int[] position = convertSlotToIndex(userSlot);
+            row = position[0];
+            col = position[1];
 
-        System.out.println("\nConverted Position:");
-        System.out.println("Row: " + position[0]);
-        System.out.println("Column: " + position[1]);
+            if (isValidMove(board, row, col)) {
+                System.out.println("Valid move accepted.");
+                break;
+            } else {
+                System.out.println("Invalid move. Try again.");
+            }
+        }
+
+        System.out.println("\nFinal Selected Position:");
+        System.out.println("Row: " + row);
+        System.out.println("Column: " + col);
     }
 }
